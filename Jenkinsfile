@@ -14,6 +14,16 @@ pipeline {
                         echo "This is a test message from dev branch! test1234"
                     }
                 }
+                stage("Test") {
+                    steps {
+                        mvn test
+                    }
+                }
+                stage("Compile code") {
+                    steps {
+                        mvn compile
+                    }
+                }
             }
         }
         stage("Prod branch") {
