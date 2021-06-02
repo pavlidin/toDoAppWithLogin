@@ -24,16 +24,7 @@ pipeline {
                         bat "mvn clean compile"
                     }
                 }
-                stage("Testing"){
-                    steps{
-                        bat "mvn test"
-                    }
-                    post{
-                        always{
-                            junit '**/target/surefire-reports/*.xml'
-                        }
-                    }
-                }               
+             
             }
         }
         stage("Prod branch") {
