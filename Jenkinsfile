@@ -11,22 +11,22 @@ pipeline {
             stages {
                 stage("Test message from dev branch") {
                     steps {
-                        mvn -v
+                        sh "mvn -v"
                     }
                 }
                 stage("Clean old mvn output."){
                     steps{
-                        mvn clean
+                        sh "mvn clean"
                     }
                 }
                 stage("Compile"){
                     steps{
-                        mvn clean compile
+                        sh "mvn clean compile"
                     }
                 }
                 stage("Testing"){
                     steps{
-                        mvn test
+                        sh "mvn test"
                     }
                     post{
                         always{
