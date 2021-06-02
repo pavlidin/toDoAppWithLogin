@@ -11,7 +11,7 @@ pipeline {
             stages {
                 stage("Test message from dev branch") {
                     steps {
-                        echo "This is a test message from dev branch!"
+                        echo "This is a test message from dev branch! test123"
                     }
                 }
             }
