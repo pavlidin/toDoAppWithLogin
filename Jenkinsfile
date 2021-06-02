@@ -9,11 +9,6 @@ pipeline {
                 branch 'dev'
             }
             stages {
-                stage("Test message from dev branch") {
-                    steps {
-                        sh "mvn -v"
-                    }
-                }
                 stage("Clean old mvn output."){
                     steps{
                         sh "mvn clean"
