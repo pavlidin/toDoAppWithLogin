@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven "maven-3.8.1"
+        maven "maven-3.6.1"
     }
     stages {
         stage("Dev branch") {
@@ -11,22 +11,22 @@ pipeline {
             stages {
                 stage("Test message from dev branch") {
                     steps {
-                        bat "mvn -v"
+                        "mvn -v"
                     }
                 }
                 stage("Clean old mvn output."){
                     steps{
-                        bat "mvn clean"
+                        "mvn clean"
                     }
                 }
                 stage("Compile"){
                     steps{
-                        bat "mvn clean compile"
+                        "mvn clean compile"
                     }
                 }
                 stage("Testing"){
                     steps{
-                        bat "mvn test"
+                        "mvn test"
                     }
                     post{
                         always{
@@ -57,7 +57,7 @@ pipeline {
             body:"Link to JOB $BUILD_URL"
         }
         failure{
-            mail to:"fanouria.ath@gmail.com",
+            mail to:"fanouria.ath@gmail.com";,
             subject:"FAILURE BUILD: $BUILD_TAG",
             body:"Link to JOB $BUILD_URL"
         }
