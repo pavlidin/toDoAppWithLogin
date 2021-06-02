@@ -11,22 +11,22 @@ pipeline {
             stages {
                 stage("Test message from dev branch") {
                     steps {
-                        "mvn -v"
+                        mvn -v
                     }
                 }
                 stage("Clean old mvn output."){
                     steps{
-                        "mvn clean"
+                        mvn clean
                     }
                 }
                 stage("Compile"){
                     steps{
-                        "mvn clean compile"
+                        mvn clean compile
                     }
                 }
                 stage("Testing"){
                     steps{
-                        "mvn test"
+                        mvn test
                     }
                     post{
                         always{
@@ -57,7 +57,7 @@ pipeline {
             body:"Link to JOB $BUILD_URL"
         }
         failure{
-            mail to:"fanouria.ath@gmail.com";,
+            mail to:"fanouria.ath@gmail.com",
             subject:"FAILURE BUILD: $BUILD_TAG",
             body:"Link to JOB $BUILD_URL"
         }
