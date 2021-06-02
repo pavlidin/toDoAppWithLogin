@@ -14,16 +14,26 @@ pipeline {
                         echo "This is a test message from dev branch! test1234"
                     }
                 }
-                stage("Test") {
-                    steps {
-                        mvn test
+                stage("Clean old mvn output."){
+                    steps{
+                        bat "mvn clean"
                     }
                 }
-                stage("Compile code") {
-                    steps {
-                        mvn compile
+                stage("Compile"){
+                    steps{
+                        bat "mvn clean compile"
                     }
                 }
+                stage("Testing"){
+                    steps{
+                        bat "mvn test"
+                    }
+                    post{
+                        always{
+                            junit '**/target/surefire-reports/*.xml'
+                        }
+                    }
+                }               
             }
         }
         stage("Prod branch") {
@@ -37,6 +47,18 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post{
+        success{
+            mail to:"fanouria.ath@gmail.com",
+            subject:"SUCCESSFUL BUILD: $BUILD_TAG",
+            body:"Link to JOB $BUILD_URL"
+        }
+        failure{
+            mail to:"fanouria.ath@gmail.com",
+            subject:"FAILURE BUILD: $BUILD_TAG",
+            body:"Link to JOB $BUILD_URL"
         }
     }
 }
