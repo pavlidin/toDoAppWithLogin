@@ -11,7 +11,7 @@ pipeline {
             stages {
                 stage("Test message from dev branch") {
                     steps {
-                        echo "This is a test message from dev branch! test1234"
+                        bat "mvn -v"
                     }
                 }
                 stage("Clean old mvn output."){
@@ -24,6 +24,16 @@ pipeline {
                         bat "mvn clean compile"
                     }
                 }
+                stage("Testing"){
+                    steps{
+                        bat "mvn test"
+                    }
+                    post{
+                        always{
+                            junit '**/target/surefire-reports/*.xml'
+                        }
+                    }
+                }  
              
             }
         }
