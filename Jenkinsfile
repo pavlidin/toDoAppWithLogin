@@ -3,6 +3,9 @@ pipeline {
     tools {
         maven "maven-3.6.1"
     }
+    environment {
+        DOCKER_TAG = "getVersion()"
+    }
     stages {
         stage("Dev branch") {
             when {
@@ -33,8 +36,14 @@ pipeline {
                     steps{
                         sh "mvn package"
                     }
-                } 
-             
+                }
+                stage("Docker Package"){
+                    steps{
+                        echo "This is a test message from prod branch!"
+                        sh "docker build . -t fanouria/toDoAppWithLogin:${DOCKER_TAG}"
+                    }
+                }
+                                
             }
         }
         stage("Prod branch") {
@@ -62,4 +71,8 @@ pipeline {
             body:"Link to JOB $BUILD_URL"
         }
     }
+}
+def getVersion(){
+    def commitHash = sh label: '', returnStdout: true, script: 'git rev-parse --short HEAD'
+    return commitHash
 }
