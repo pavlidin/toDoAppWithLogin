@@ -39,7 +39,8 @@ pipeline {
                 }
                 stage("Docker Package"){
                     steps{
-                        sh "docker build -t fanouria/toDoAppWithLogin:${DOCKER_TAG} ."
+                        echo "This is a test message from prod branch!"
+                        
                     }
                                 
             }
@@ -73,4 +74,4 @@ pipeline {
 def getVersion(){
     def commitHash = sh label: '', returnStdout: true, script: 'git rev-parse --short HEAD'
     return commitHASH
- }
+}
