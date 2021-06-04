@@ -39,8 +39,7 @@ pipeline {
                 }
                 stage("Docker Package"){
                     steps{
-                        echo "This is a test message from prod branch!"
-                        sh "docker build . -t fanouria/toDoAppWithLogin:${DOCKER_TAG}"
+                        sh "docker container ps"
                     }
                 }
                                 
