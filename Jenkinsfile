@@ -39,7 +39,7 @@ pipeline {
                 }
                 stage("Docker Package"){
                     steps{
-                        sh "docker build -t fanouria/toDoAppWithLogin:0.0.1"
+                        sh "docker build -t fanouria/toDoAppWithLogin:${DOCKER_TAG} ."
                     }
                                 
             }
