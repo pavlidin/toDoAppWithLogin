@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment{
+        docker_credentials = 'docker_creds'
+        docker_image = ''
+    }
     tools {
         maven "maven-3.6.1"
     }
@@ -34,13 +38,28 @@ pipeline {
                         sh "mvn package"
                     }
                 }
-                stage("Docker container"){
+                stage("Docker build"){
                     steps{
-                        withDockerRegistry([ credentialsId: "docker_creds", url: "https://hub.docker.com/repository/docker/pavlidin/todoappwithlogin" ])
-                        sh "docker build -t pavlidin/todoappwithlogin:latest ."       
-                        sh "docker push pavlidin/todoappwithlogin:latest"                 
+                        script{
+                            docker_image = docker.build "pavlidin/todoappwithlogin"
+                        }
+
+                        // sh "docker build -t pavlidin/todoappwithlogin:latest ."       
+                        // sh "docker push pavlidin/todoappwithlogin:latest"                 
                     }
                 }  
+                stage("Docker push"){
+                    steps{
+                        script{
+                            docker.withRegistry('',docker_credentials){
+                                docker_image.push('latest')
+                            }
+                        }                 
+
+               
+
+                    }
+                } 
              
             }
         }
