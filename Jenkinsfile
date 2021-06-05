@@ -39,7 +39,7 @@ pipeline {
         }
         stage("Production branch") {
             when {
-                branch 'dev'
+                branch 'prod'
             }
             stages {
                 stage("Clean old mvn output."){
