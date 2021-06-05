@@ -37,7 +37,7 @@ pipeline {
                 stage("Docker container"){
                     steps{
                         sh "pwd"
-                        sh "docker build -t todoappwithlogin:latest"                        
+                        sh "docker build -t todoappwithlogin:latest ."                        
                     }
                 }  
              
