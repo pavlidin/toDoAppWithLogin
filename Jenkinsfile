@@ -3,11 +3,8 @@ pipeline {
     tools {
         maven "maven-3.6.1"
     }
-    environment {
-        DOCKER_TAG = "getVersion()"
-    }
     stages {
-        stage("Dev branch") {
+        stage("Development branch") {
             when {
                 branch 'dev'
             }
@@ -36,26 +33,41 @@ pipeline {
                     steps{
                         sh "mvn package"
                     }
-                }
-                stage("Docker Package"){
-                    steps{
-                        echo "This is a test message from prod branch!"
-                        sh "docker build . -t fanouria/toDoAppWithLogin:${DOCKER_TAG}"
-                    }
-                }
-                                
+                } 
+             
             }
         }
-        stage("Prod branch") {
+        stage("Production branch") {
             when {
-                branch 'prod'
+                branch 'dev'
             }
             stages {
-                stage("Test message from prod branch") {
-                    steps {
-                        echo "This is a test message from prod branch!"
+                stage("Clean old mvn output."){
+                    steps{
+                        sh "mvn clean"
                     }
                 }
+                stage("Compile"){
+                    steps{
+                        sh "mvn clean compile"
+                    }
+                }
+                stage("Testing"){
+                    steps{
+                        sh "mvn test"
+                    }
+                    post{
+                        always{
+                            junit '**/target/surefire-reports/*.xml'
+                        }
+                    }
+                } 
+                stage("Package"){
+                    steps{
+                        sh "mvn package"
+                    }
+                } 
+             
             }
         }
     }
@@ -71,8 +83,4 @@ pipeline {
             body:"Link to JOB $BUILD_URL"
         }
     }
-}
-def getVersion(){
-    def commitHash = sh label: '', returnStdout: true, script: 'git rev-parse --short HEAD'
-    return commitHash
 }
