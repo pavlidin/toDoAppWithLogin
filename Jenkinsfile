@@ -74,7 +74,7 @@ pipeline {
                 } 
                 stage("Docker container"){
                     steps{
-                        sh "docker build . -t toDoAppWithLogin:latest"                        
+                        sh "docker build . -t todoappwithlogin:latest"                        
                     }
                 } 
              
