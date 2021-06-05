@@ -1,14 +1,15 @@
 #
 # Package stage
 #
-FROM openjre:11
+FROM  java:openjdk-11-jre
 EXPOSE 8080
 
-COPY /var/lib/jenkins/workspace/ToDoApp_dev/target/toDoAppWithLogin.jar /usr/local/lib/toDoAppWithLogin.jar
+WORKDIR /app
+COPY /var/lib/jenkins/workspace/ToDoApp_dev/target/toDoAppWithLogin.jar .
 
-# Run app
-CMD ["-jar","/usr/local/lib/toDoAppWithLogin.jar"]
-ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher", "--
-my_sql.host=your-database-link", "--my_sql.port=database-port"]
+# # Run app
+# CMD ["-jar","toDoAppWithLogin.jar"]
+# ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher", "--
+# my_sql.host=your-database-link", "--my_sql.port=database-port"]
 
 
