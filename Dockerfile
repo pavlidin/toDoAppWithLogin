@@ -1,7 +1,7 @@
 #
 # Package stage
 #
-FROM  java:openjdk-11-jre
+FROM  openjdk:11-jre
 EXPOSE 8080
 
 WORKDIR /app
