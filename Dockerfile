@@ -5,7 +5,7 @@ FROM  openjdk:11-jre
 EXPOSE 8080
 
 
-COPY /var/lib/jenkins/workspace/ToDoApp_dev/target/toDoAppWithLogin.jar /usr/local/lib/toDoAppWithLogin.jar
+COPY /var/lib/jenkins/workspace/ToDoApp_dev/target/toDoAppWithLogin.jar /usr/local/lib
 
 # Run app
 # CMD ["-jar","/usr/local/lib/toDoAppWithLogin.jar"]
