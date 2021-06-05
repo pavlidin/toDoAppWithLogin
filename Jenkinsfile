@@ -4,7 +4,7 @@ pipeline {
         maven "maven-3.6.1"
     }
     stages {
-        stage("Dev branch") {
+        stage("Development branch") {
             when {
                 branch 'dev'
             }
@@ -37,16 +37,37 @@ pipeline {
              
             }
         }
-        stage("Prod branch") {
+        stage("Production branch") {
             when {
-                branch 'prod'
+                branch 'dev'
             }
             stages {
-                stage("Test message from prod branch") {
-                    steps {
-                        echo "This is a test message from prod branch!"
+                stage("Clean old mvn output."){
+                    steps{
+                        sh "mvn clean"
                     }
                 }
+                stage("Compile"){
+                    steps{
+                        sh "mvn clean compile"
+                    }
+                }
+                stage("Testing"){
+                    steps{
+                        sh "mvn test"
+                    }
+                    post{
+                        always{
+                            junit '**/target/surefire-reports/*.xml'
+                        }
+                    }
+                } 
+                stage("Package"){
+                    steps{
+                        sh "mvn package"
+                    }
+                } 
+             
             }
         }
     }
