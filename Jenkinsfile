@@ -37,7 +37,8 @@ pipeline {
                 stage("Docker container"){
                     steps{
                         sh "pwd"
-                        sh "docker build -t fanouria/todoappwithlogin:latest ."                        
+                        sh "docker build -t fanouria/todoappwithlogin:latest ."       
+                        sh "docker push fanouria/todoappwithlogin:latest"                 
                     }
                 }  
              
