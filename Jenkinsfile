@@ -37,6 +37,7 @@ pipeline {
                 stage("Docker container"){
                     steps{
                         sh "pwd"
+                        withDockerRegistry([ credentialsId: "docker_creds", url: "" ])
                         sh "docker build -t pavlidin/todoappwithlogin:latest ."       
                         sh "docker push pavlidin/todoappwithlogin:latest"                 
                     }
