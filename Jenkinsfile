@@ -33,7 +33,12 @@ pipeline {
                     steps{
                         sh "mvn package"
                     }
-                } 
+                }
+                stage("Docker container"){
+                    steps{
+                        sh "docker build . -t toDoAppWithLogin:latest"                        
+                    }
+                }  
              
             }
         }
