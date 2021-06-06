@@ -1,11 +1,8 @@
-#
-# Package stage
-#
 FROM  openjdk:11-jre
 EXPOSE 8080
 
-
-COPY target/toDoAppWithLogin.jar /usr/local/lib/
+WORKDIR /app
+COPY /var/lib/jenkins/workspace/ToDoApp_dev/target/toDoAppWithLogin.jar .
 
 # Run app
 # CMD ["-jar","/usr/local/lib/toDoAppWithLogin.jar"]
