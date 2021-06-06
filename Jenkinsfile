@@ -41,7 +41,7 @@ pipeline {
                 stage("Docker build dev jar image") {
                     steps {
                         script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER" --target openjdk8
+                            docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
                         }            
                     }
                 }  
