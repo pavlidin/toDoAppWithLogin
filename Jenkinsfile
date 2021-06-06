@@ -95,15 +95,15 @@ pipeline {
         }
     }
     post {
-        success {
-            mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
-                subject: "SUCCESSFUL BUILD: $BUILD_TAG",
-                body: "Link to JOB $BUILD_URL"
-        }
-        failure {
-            mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
-                subject: "FAILURE BUILD: $BUILD_TAG",
-                body: "Link to JOB $BUILD_URL"
-        }
+        // success {
+        //     mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+        //         subject: "SUCCESSFUL BUILD: $BUILD_TAG",
+        //         body: "Link to JOB $BUILD_URL"
+        // }
+        // failure {
+        //     mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+        //         subject: "FAILURE BUILD: $BUILD_TAG",
+        //         body: "Link to JOB $BUILD_URL"
+        // }
     }
 }
