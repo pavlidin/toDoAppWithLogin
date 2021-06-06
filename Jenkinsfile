@@ -54,13 +54,13 @@ pipeline {
                         }                 
                     }
                 } 
-                stage("Docker build dev mysql image") {
-                    steps {
-                        script {
-                            docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER" --target mysql8
-                        }                 
-                    }
-                }
+                // stage("Docker build dev mysql image") {
+                //     steps {
+                //         script {
+                //             docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER" --target mysql8
+                //         }                 
+                //     }
+                // }
             }
         }
         stage("Production branch") {
