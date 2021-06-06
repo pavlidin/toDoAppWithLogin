@@ -41,7 +41,7 @@ pipeline {
                 stage("Docker build") {
                     steps {
                         script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin:build-$BUILD_NUMBER"
+                            docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
                         }            
                     }
                 }  
@@ -49,7 +49,7 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                docker_image.push("build-$BUILD_NUMBER")
+                                docker_image.push("devbuild-$BUILD_NUMBER")
                             }
                         }                 
                     }
@@ -62,7 +62,7 @@ pipeline {
                 branch 'prod'
             }
             stages {
-                stage("Clean old mvn output.") {
+                stage("Clean old mvn output."){
                     steps {
                         sh "mvn clean"
                     }
@@ -90,19 +90,20 @@ pipeline {
                 stage("Docker build") {
                     steps {
                         script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin"
+                            docker_image = docker.build "pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER"
                         }            
                     }
                 }  
                 stage("Docker push") {
-                    steps{
+                    steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                docker_image.push('latest')
+                                docker_image.push("prodbuild-$BUILD_NUMBER")
                             }
                         }                 
                     }
                 } 
+             
             }
         }
     }
