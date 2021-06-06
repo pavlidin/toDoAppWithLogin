@@ -54,7 +54,7 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                docker_image = "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
+                                docker_image = 'pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER'
                                 docker_image.push("devbuild-$BUILD_NUMBER")
                             }
                         }                 
