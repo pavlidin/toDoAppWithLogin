@@ -41,7 +41,7 @@ pipeline {
                 stage("Docker build") {
                     steps {
                         script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin:$BUILD_NUMBER"
+                            docker_image = docker.build "pavlidin/todoappwithlogin:build-$BUILD_NUMBER"
                         }            
                     }
                 }  
@@ -49,7 +49,7 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                docker_image.push('latest')
+                                docker_image.push("build-$BUILD_NUMBER")
                             }
                         }                 
                     }
