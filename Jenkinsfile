@@ -40,27 +40,23 @@ pipeline {
             stages {
                 stage("Docker build dev jar image") {
                     steps {
-                        script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
-                        }            
+                        sh "docker build -t pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk8 ."
                     }
-                }  
+                }
                 stage("Docker push dev jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                docker_image.push("devbuild-$BUILD_NUMBER")
+                                sh "docker push pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
                             }
-                        }                 
+                        }
                     }
-                } 
-                // stage("Docker build dev mysql image") {
-                //     steps {
-                //         script {
-                //             docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
-                //         }                 
-                //     }
-                // }
+                }
+                stage("Docker build dev mysql image") {
+                    steps {
+                        sh "docker build -t pavlidin/dev-java-mysql:8.0 --target mysql8 ."
+                    }
+                }
             }
         }
         stage("Production branch") {
@@ -70,27 +66,23 @@ pipeline {
             stages {
                 stage("Docker build prod jar image") {
                     steps {
-                        script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER"
-                        }            
+                        sh "docker build -t pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER --target openjdk8 ."
                     }
-                }  
+                }
                 stage("Docker push prod jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                docker_image.push("prodbuild-$BUILD_NUMBER")
+                                sh "docker push pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER"
                             }
-                        }                 
+                        }
                     }
-                } 
-                // stage("Docker build prod mysql image") {
-                //     steps {
-                //         script {
-                //             docker_image = docker.build "pavlidin/java-mysql:prodbuild-$BUILD_NUMBER"
-                //         }                 
-                //     }
-                // } 
+                }
+                stage("Docker build prod mysql image") {
+                    steps {
+                        sh "docker build -t pavlidin/prod-java-mysql:8.0 --target mysql8 ."
+                    }
+                }
             }
         }
     }
