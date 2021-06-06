@@ -3,6 +3,7 @@ WORKDIR /app
 COPY target/toDoAppWithLogin.jar toDoAppWithLogin.jar
 
 FROM mysql:8.0
+COPY . .
 ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher", "--\
 my_sql.host=java-mysql", "--my_sql.port=3306"]
 
