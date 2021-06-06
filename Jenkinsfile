@@ -54,13 +54,13 @@ pipeline {
                         }                 
                     }
                 } 
-                stage("Docker build dev mysql image") {
-                    steps {
-                        script {
-                            docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
-                        }                 
-                    }
-                } 
+                // stage("Docker build dev mysql image") {
+                //     steps {
+                //         script {
+                //             docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
+                //         }                 
+                //     }
+                // }
             }
         }
         stage("Production branch") {
@@ -84,13 +84,13 @@ pipeline {
                         }                 
                     }
                 } 
-                stage("Docker build prod mysql image") {
-                    steps {
-                        script {
-                            docker_image = docker.build "pavlidin/java-mysql:prodbuild-$BUILD_NUMBER"
-                        }                 
-                    }
-                } 
+                // stage("Docker build prod mysql image") {
+                //     steps {
+                //         script {
+                //             docker_image = docker.build "pavlidin/java-mysql:prodbuild-$BUILD_NUMBER"
+                //         }                 
+                //     }
+                // } 
             }
         }
     }
