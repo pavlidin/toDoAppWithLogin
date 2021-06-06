@@ -33,28 +33,14 @@ pipeline {
                         sh "mvn package"
                     }
                 }
-<<<<<<< HEAD
-                stage("Development branch") {
-            when {
-                branch 'dev'
-            }
-            stages {
-                stage("Docker build jar image") {
-=======
                 stage("Docker build") {
->>>>>>> parent of a78c29c (add init mysql dev config)
                     steps {
                         script {
                             docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
                         }
                     }
-<<<<<<< HEAD
-                }
-                stage("Docker push jar image") {
-=======
                 }  
                 stage("Docker push") {
->>>>>>> parent of a78c29c (add init mysql dev config)
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
@@ -63,17 +49,6 @@ pipeline {
                         }                 
                     }
                 } 
-<<<<<<< HEAD
-                stage("Docker build mysql image") {
-                    steps {
-                        script {
-                            docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
-                        }                 
-                    }
-                }
-                
-=======
->>>>>>> parent of a78c29c (add init mysql dev config)
              
             }
             stage("Docker prune dangling images") {
