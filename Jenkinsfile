@@ -62,7 +62,7 @@ pipeline {
                 // }
                 stage("Docker build dev mysql image") {
                     steps {
-                        sh "docker build -t pavlidin/java-mysql:devbuild-$BUILD_NUMBER --target mysql8 ."
+                        sh "docker build -t pavlidin/java-mysql:8.0 --target mysql8 ."
                     }
                 }
                 // stage("Docker build dev mysql image") {
