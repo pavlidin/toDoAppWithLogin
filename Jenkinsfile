@@ -38,25 +38,26 @@ pipeline {
                 branch 'dev'
             }
             stages {
-                stage("Docker build dev jar image") {
-                    steps {
-                        script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk8 ."
-                        }            
-                    }
-                }  
                 // stage("Docker build dev jar image") {
                 //     steps {
-                //         sh "docker build -t pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk8 ."
+                //         script {
+                //             docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk8 ."
+                //         }
                 //     }
-                // }  
+                // }
+                stage("Docker build dev jar image") {
+                    steps {
+                        sh "docker build -t pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk8 ."
+                    }
+                }
                 stage("Docker push dev jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
+                                docker_image = 'pavlidin/todoappwithlogin'
                                 docker_image.push("devbuild-$BUILD_NUMBER")
                             }
-                        }                 
+                        }
                     }
                 }
                 stage("Docker build dev mysql image") {
