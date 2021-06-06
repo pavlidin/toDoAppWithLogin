@@ -42,17 +42,14 @@ pipeline {
                     steps{
                         script{
                             docker_image = docker.build "pavlidin/todoappwithlogin"
-                        }
-
-                        // sh "docker build -t pavlidin/todoappwithlogin:latest ."       
-                        // sh "docker push pavlidin/todoappwithlogin:latest"                 
+                        }            
                     }
                 }  
                 stage("Docker push"){
                     steps{
                         script{
                             docker.withRegistry('',docker_credentials){
-                                docker_image.push('latest')
+                                docker_image.push('XD')
                             }
                         }                 
 
@@ -92,10 +89,24 @@ pipeline {
                     steps{
                         sh "mvn package"
                     }
-                } 
-                stage("Docker container"){
+                }
+                stage("Docker build"){
                     steps{
-                        sh "docker build . -t todoappwithlogin:latest"                        
+                        script{
+                            docker_image = docker.build "pavlidin/todoappwithlogin"
+                        }            
+                    }
+                }  
+                stage("Docker push"){
+                    steps{
+                        script{
+                            docker.withRegistry('',docker_credentials){
+                                docker_image.push('latest')
+                            }
+                        }                 
+
+               
+
                     }
                 } 
              

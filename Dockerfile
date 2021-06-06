@@ -8,5 +8,3 @@ COPY target/toDoAppWithLogin.jar toDoAppWithLogin.jar
 # CMD ["-jar","/usr/local/lib/toDoAppWithLogin.jar"]
 # ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher", "--
 # my_sql.host=your-database-link", "--my_sql.port=database-port"]
-
-
