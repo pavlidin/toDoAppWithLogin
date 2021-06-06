@@ -1,6 +1,7 @@
 FROM  openjdk:8-jre as openjdk8
 WORKDIR /app
 COPY target/toDoAppWithLogin.jar toDoAppWithLogin.jar
+CMD ["-jar","/app/toDoAppWithLogin.jar"]
 
 FROM mysql:8.0 as mysql8
 ENV MYSQL_ROOT_PASSWORD root
