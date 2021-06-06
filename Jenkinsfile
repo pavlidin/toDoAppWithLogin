@@ -13,7 +13,7 @@ pipeline {
                 branch 'dev'
             }
             stages {
-                stage("Clean old mvn output."){
+                stage("Clean old mvn output.") {
                     steps {
                         sh "mvn clean"
                     }
