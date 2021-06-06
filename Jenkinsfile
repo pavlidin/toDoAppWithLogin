@@ -8,6 +8,11 @@ pipeline {
         maven "maven-3.6.1"
     }
     stages {
+        stage("Development branch") {
+            when {
+                branch 'dev'
+            }
+            stages {
                 stage("Clean old mvn output.") {
                     steps {
                         sh "mvn clean"
@@ -33,14 +38,14 @@ pipeline {
                         sh "mvn package"
                     }
                 }
-                stage("Docker build") {
+                stage("Docker build jar image") {
                     steps {
                         script {
                             docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
-                        }
+                        }            
                     }
                 }  
-                stage("Docker push") {
+                stage("Docker push jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
@@ -49,16 +54,16 @@ pipeline {
                         }                 
                     }
                 } 
+                stage("Docker build mysql image") {
+                    steps {
+                        script {
+                            docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
+                        }                 
+                    }
+                } 
              
             }
-            stage("Docker prune dangling images") {
-                    steps {
-                        sh "docker image prune -f"               
-                    }
-                }
         }
-
-
         stage("Production branch") {
             when {
                 branch 'prod'
