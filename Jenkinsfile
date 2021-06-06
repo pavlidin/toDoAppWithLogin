@@ -38,11 +38,16 @@ pipeline {
                 branch 'dev'
             }
             stages {
+                // stage("Docker build dev jar image") {
+                //     steps {
+                //         script {
+                //             docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
+                //         }            
+                //     }
+                // }  
                 stage("Docker build dev jar image") {
                     steps {
-                        script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
-                        }            
+                        sh "docker build -t pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk8 ."
                     }
                 }  
                 stage("Docker push dev jar image") {
