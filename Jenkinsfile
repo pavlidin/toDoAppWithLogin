@@ -52,18 +52,19 @@ pipeline {
                 }  
                 stage("Docker push dev jar image") {
                     steps {
-                        sh "docker image push pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
+                        script {
+                            docker.withRegistry('',docker_credentials) {
+                                docker_image = 'pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER'
+                                docker_image.push("devbuild-$BUILD_NUMBER")
+                            }
+                        }                 
                     }
                 }
-                // stage("Docker push dev jar image") {
-                //     steps {
-                //         script {
-                //             docker.withRegistry('',docker_credentials) {
-                //                 docker_image.push("devbuild-$BUILD_NUMBER")
-                //             }
-                //         }                 
-                //     }
-                // }
+                stage("Docker build dev mysql image") {
+                    steps {
+                        sh "docker build -t pavlidin/java-mysql:devbuild-$BUILD_NUMBER --target mysql8 ."
+                    }
+                }
                 // stage("Docker build dev mysql image") {
                 //     steps {
                 //         script {
