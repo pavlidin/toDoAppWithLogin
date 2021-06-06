@@ -54,13 +54,13 @@ pipeline {
                         }                 
                     }
                 } 
-                stage("Docker build dev mysql image") {
-                    steps {
-                        script {
-                            docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
-                        }                 
-                    }
-                } 
+                // stage("Docker build dev mysql image") {
+                //     steps {
+                //         script {
+                //             docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
+                //         }                 
+                //     }
+                // }
             }
         }
         stage("Production branch") {
@@ -84,26 +84,26 @@ pipeline {
                         }                 
                     }
                 } 
-                stage("Docker build prod mysql image") {
-                    steps {
-                        script {
-                            docker_image = docker.build "pavlidin/java-mysql:prodbuild-$BUILD_NUMBER"
-                        }                 
-                    }
-                } 
+                // stage("Docker build prod mysql image") {
+                //     steps {
+                //         script {
+                //             docker_image = docker.build "pavlidin/java-mysql:prodbuild-$BUILD_NUMBER"
+                //         }                 
+                //     }
+                // } 
             }
         }
     }
-    post {
-        success {
-            mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
-                subject: "SUCCESSFUL BUILD: $BUILD_TAG",
-                body: "Link to JOB $BUILD_URL"
-        }
-        failure {
-            mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
-                subject: "FAILURE BUILD: $BUILD_TAG",
-                body: "Link to JOB $BUILD_URL"
-        }
-    }
+    // post {
+    //     success {
+    //         mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+    //             subject: "SUCCESSFUL BUILD: $BUILD_TAG",
+    //             body: "Link to JOB $BUILD_URL"
+    //     }
+    //     failure {
+    //         mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+    //             subject: "FAILURE BUILD: $BUILD_TAG",
+    //             body: "Link to JOB $BUILD_URL"
+    //     }
+    // }
 }
