@@ -41,7 +41,7 @@ pipeline {
                 stage("Docker build dev jar image") {
                     steps {
                         script {
-                            docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
+                            docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER" --target openjdk8
                         }            
                     }
                 }  
@@ -54,13 +54,13 @@ pipeline {
                         }                 
                     }
                 } 
-                // stage("Docker build dev mysql image") {
-                //     steps {
-                //         script {
-                //             docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
-                //         }                 
-                //     }
-                // }
+                stage("Docker build dev mysql image") {
+                    steps {
+                        script {
+                            docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER" --target mysql8
+                        }                 
+                    }
+                }
             }
         }
         stage("Production branch") {
