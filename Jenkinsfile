@@ -38,19 +38,26 @@ pipeline {
                         sh "mvn package"
                     }
                 }
-                stage("Docker build") {
+                stage("Docker build jar image") {
                     steps {
                         script {
                             docker_image = docker.build "pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
                         }            
                     }
                 }  
-                stage("Docker push") {
+                stage("Docker push jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
                                 docker_image.push("devbuild-$BUILD_NUMBER")
                             }
+                        }                 
+                    }
+                } 
+                stage("Docker build mysql image") {
+                    steps {
+                        script {
+                            docker_image = docker.build "pavlidin/java-mysql:devbuild-$BUILD_NUMBER"
                         }                 
                     }
                 } 
