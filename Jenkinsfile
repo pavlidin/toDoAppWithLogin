@@ -38,6 +38,11 @@ pipeline {
                 branch 'dev'
             }
             stages {
+                stage("Docker build dev mysql image") {
+                    steps {
+                        sh "docker build -t pavlidin/dev-java-mysql:8.0 --target mysql8 ."
+                    }
+                }
                 stage("Docker build dev jar image") {
                     steps {
                         sh "docker build -t pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk8 ."
@@ -52,11 +57,6 @@ pipeline {
                         }
                     }
                 }
-                stage("Docker build dev mysql image") {
-                    steps {
-                        sh "docker build -t pavlidin/dev-java-mysql:8.0 --target mysql8 ."
-                    }
-                }
             }
         }
         stage("Production branch") {
@@ -64,6 +64,11 @@ pipeline {
                 branch 'prod'
             }
             stages {
+                stage("Docker build prod mysql image") {
+                    steps {
+                        sh "docker build -t pavlidin/prod-java-mysql:8.0 --target mysql8 ."
+                    }
+                }
                 stage("Docker build prod jar image") {
                     steps {
                         sh "docker build -t pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER --target openjdk8 ."
@@ -76,11 +81,6 @@ pipeline {
                                 sh "docker push pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER"
                             }
                         }
-                    }
-                }
-                stage("Docker build prod mysql image") {
-                    steps {
-                        sh "docker build -t pavlidin/prod-java-mysql:8.0 --target mysql8 ."
                     }
                 }
             }
