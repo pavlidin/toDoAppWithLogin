@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environment{
+    environment {
         docker_credentials = 'docker_creds'
         docker_image = ''
     }
@@ -14,47 +14,44 @@ pipeline {
             }
             stages {
                 stage("Clean old mvn output."){
-                    steps{
+                    steps {
                         sh "mvn clean"
                     }
                 }
-                stage("Compile"){
-                    steps{
+                stage("Compile") {
+                    steps {
                         sh "mvn clean compile"
                     }
                 }
-                stage("Testing"){
-                    steps{
+                stage("Testing") {
+                    steps {
                         sh "mvn test"
                     }
-                    post{
-                        always{
+                    post {
+                        always {
                             junit '**/target/surefire-reports/*.xml'
                         }
                     }
                 } 
-                stage("Package"){
-                    steps{
+                stage("Package") {
+                    steps {
                         sh "mvn package"
                     }
                 }
-                stage("Docker build"){
-                    steps{
-                        script{
-                            docker_image = docker.build "pavlidin/todoappwithlogin"
+                stage("Docker build") {
+                    steps {
+                        script {
+                            docker_image = docker.build "pavlidin/todoappwithlogin:XEXE"
                         }            
                     }
                 }  
-                stage("Docker push"){
-                    steps{
-                        script{
-                            docker.withRegistry('',docker_credentials){
+                stage("Docker push") {
+                    steps {
+                        script {
+                            docker.withRegistry('',docker_credentials) {
                                 docker_image.push('XD')
                             }
                         }                 
-
-               
-
                     }
                 } 
              
@@ -65,61 +62,57 @@ pipeline {
                 branch 'prod'
             }
             stages {
-                stage("Clean old mvn output."){
-                    steps{
+                stage("Clean old mvn output.") {
+                    steps {
                         sh "mvn clean"
                     }
                 }
-                stage("Compile"){
-                    steps{
+                stage("Compile") {
+                    steps {
                         sh "mvn clean compile"
                     }
                 }
-                stage("Testing"){
-                    steps{
+                stage("Testing") {
+                    steps {
                         sh "mvn test"
                     }
-                    post{
-                        always{
+                    post {
+                        always {
                             junit '**/target/surefire-reports/*.xml'
                         }
                     }
                 } 
-                stage("Package"){
-                    steps{
+                stage("Package") {
+                    steps {
                         sh "mvn package"
                     }
                 }
-                stage("Docker build"){
-                    steps{
-                        script{
+                stage("Docker build") {
+                    steps {
+                        script {
                             docker_image = docker.build "pavlidin/todoappwithlogin"
                         }            
                     }
                 }  
-                stage("Docker push"){
+                stage("Docker push") {
                     steps{
-                        script{
-                            docker.withRegistry('',docker_credentials){
+                        script {
+                            docker.withRegistry('',docker_credentials) {
                                 docker_image.push('latest')
                             }
                         }                 
-
-               
-
                     }
                 } 
-             
             }
         }
     }
-    post{
-        success{
+    post {
+        success {
             mail to:"fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
             subject:"SUCCESSFUL BUILD: $BUILD_TAG",
             body:"Link to JOB $BUILD_URL"
         }
-        failure{
+        failure {
             mail to:"fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
             subject:"FAILURE BUILD: $BUILD_TAG",
             body:"Link to JOB $BUILD_URL"
