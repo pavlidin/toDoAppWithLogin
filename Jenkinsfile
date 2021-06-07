@@ -3,6 +3,7 @@ pipeline {
     environment {
         docker_credentials = 'docker_creds'
         docker_image = ''
+        ansible_credentials = 'ansible_creds'
     }
     tools {
         maven "maven-3.6.1"
@@ -73,6 +74,11 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage("Ansible test") {
+            steps {
+                ansiblePlaybook(credentialsId: ansible_creds, inventory: 'hosts', playbook: 'my_playbook.yml')
             }
         }
     }

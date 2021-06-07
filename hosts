@@ -1,0 +1,13 @@
+localhost ansible_connection=local
+
+[java_app_dev]
+dev-pf6.westeurope.cloudapp.azure.com
+
+[java_app_prod]
+prod1-pf6.westeurope.cloudapp.azure.com
+prod2-pf6.westeurope.cloudapp.azure.com
+
+[java_app]
+dev-pf6.westeurope.cloudapp.azure.com
+prod1-pf6.westeurope.cloudapp.azure.com
+prod2-pf6.westeurope.cloudapp.azure.com
