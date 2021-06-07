@@ -7,8 +7,5 @@
     user: 'Project Future 6 Devops Team 3'
 
   tasks:
-    - name: Touch a file, using symbolic modes to set the permissions (equivalent to 0644)
-  ansible.builtin.file:
-    path: /ansible_test_file.conf
-    state: touch
-    mode: u=rw,g=r,o=r
+    - name: Deploy app in dev
+      ping:
