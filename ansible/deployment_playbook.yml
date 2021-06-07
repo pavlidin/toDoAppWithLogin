@@ -1,7 +1,8 @@
 ---
-- name: Copy-files example
+- name: Pull MySQL image
   hosts: java_app
   become: true
+  gather_facts: no
 
   vars:
     docker_volume: mysql_data
@@ -11,14 +12,14 @@
   tasks:
     - name: Launch database container
       docker_container:
-        name: "{{ db_name }}"
+        name: '{{ db_name }}'
         image: mysql:8.0
       volumes:
-        - "{{ docker_volume }}:/var/lib/mysql:rw"
+        - '{{ docker_volume }}:/var/lib/mysql:rw'
       restart: false
       networks:
-        - name: "{{ docker_network }}"
+        - name: { { docker_network } }
       alias:
-        - "{{ db_name }}"
+        - { { db_name } }
       env:
         MYSQL_ROOT_PASSWORD: root
