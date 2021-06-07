@@ -10,7 +10,7 @@
     db_name: mysql
 
   tasks:
-    - name: Launch database container
+    - name: Troll
       docker_container:
         name: '{ { db_name } }'
         image: mysql:8.0
