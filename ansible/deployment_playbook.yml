@@ -18,7 +18,7 @@
         - '{{ docker_volume }}:/var/lib/mysql:rw'
       restart: false
       networks:
-        - name: { { docker_network } }
+        - name: '{ { docker_network } }'
       alias:
         - '{ { db_name } }'
       env:
