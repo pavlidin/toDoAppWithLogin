@@ -1,27 +1,25 @@
----
 - name: Pull MySQL image
   hosts: java_app
   become: true
-  gather_facts: no
-
+  gather_facts: 'no'
   vars:
     docker_volume: db_data
     docker_network: ansible_net
     db_name: db
-
-- name: "Launch database container"
-  docker_container:
-    name: "{{ db_name }}"
-    image: mysql:5.7
-  volumes:
-    - "{{ docker_volume }}:/var/lib/mysql:rw"
-  restart: true
-  networks:
-  - name: "{{ docker_network }}"
-  alias:
-  - "{{ db_name }}"
-  env:
-    MYSQL_ROOT_PASSWORD: wordpress
-    MYSQL_DATABASE: wordpress
-    MYSQL_USER: wordpress
-    MYSQL_PASSWORD: wordpress
+  tasks:
+    - name: Launch database container
+      docker_container:
+        name: '{{ db_name }}'
+        image: 'mysql:5.7'
+      volumes:
+        - '{{ docker_volume }}:/var/lib/mysql:rw'
+      restart: true
+      networks:
+        - name: '{{ docker_network }}'
+      alias:
+        - '{{ db_name }}'
+      env:
+        MYSQL_ROOT_PASSWORD: wordpress
+        MYSQL_DATABASE: wordpress
+        MYSQL_USER: wordpress
+        MYSQL_PASSWORD: wordpress
