@@ -12,7 +12,7 @@
   tasks:
     - name: Launch database container
       docker_container:
-        name: '{{ db_name }}'
+        name: { { db_name } }
         image: mysql:8.0
       volumes:
         - '{{ docker_volume }}:/var/lib/mysql:rw'
