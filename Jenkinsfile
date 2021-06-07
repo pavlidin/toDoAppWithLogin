@@ -80,7 +80,7 @@ pipeline {
             steps {
                 script {
                     ansiblePlaybook credentialsId: ansible_credentials, inventory: 'ansible/hosts', 
-                    playbook: 'ansible/dev_deployment_playbook.yml', extraVars: "build_nr=$BUILD_NUMBER"
+                    playbook: 'ansible/dev_deployment_playbook.yml', extraVars: [build_nr: "$BUILD_NUMBER"]
                 }
             }
         }
