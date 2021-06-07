@@ -4,9 +4,9 @@
   become: true
 
   vars:
-  docker_volume: mysql_data
-  docker_network: mysql_net
-  db_name: mysql
+    docker_volume: mysql_data
+    docker_network: mysql_net
+    db_name: mysql
 
   tasks:
     - name: 'Launch database container'
