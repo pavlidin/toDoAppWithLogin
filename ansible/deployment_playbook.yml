@@ -11,8 +11,3 @@
       docker_container:
         name: '{{ db_name }}'
         image: 'mysql:5.7'
-      env:
-        MYSQL_ROOT_PASSWORD: wordpress
-        MYSQL_DATABASE: wordpress
-        MYSQL_USER: wordpress
-        MYSQL_PASSWORD: wordpress
