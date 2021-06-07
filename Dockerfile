@@ -10,9 +10,10 @@ WORKDIR /application
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/application/ ./
-#VOLUME var/lib/sql
 ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher", "--my_sql.host=mysql", "--my_sql.port=3306"]
 
-FROM mysql:8.0 as mysql8
+FROM mysql:8.0 as my_sql
+EXPOSE 3306
+VOLUME var/lib/mysql
 ENV MYSQL_ROOT_PASSWORD root
 
