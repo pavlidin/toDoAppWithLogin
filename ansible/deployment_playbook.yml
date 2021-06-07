@@ -4,11 +4,15 @@
   gather_facts: 'no'
 
   vars:
-    docker_volume: db_data
-    docker_network: ansible_net
+    docker_volume: mysql_data
+    docker_network: mysql_net
     db_name: mysql
 
   tasks:
+    - name: Create a docker network
+      docker_network:
+        name: { { docker_network } }
+
     - name: Launch MySQL container
       docker_container:
         name: '{{ db_name }}'
