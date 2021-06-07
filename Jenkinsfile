@@ -38,6 +38,11 @@ pipeline {
                 branch 'dev'
             }
             stages {
+                stage("Docker build dev mysql image") {
+                    steps {
+                        sh "docker build -t pavlidin/dev-mysql:8.0 --target mysql8 ."
+                    }
+                }
                 stage("Docker build dev jar image") {
                     steps {
                         sh "docker build -t pavlidin/java-app:devbuild$BUILD_NUMBER --target openjdk11 ."
@@ -52,6 +57,11 @@ pipeline {
                         }
                     }
                 }
+                stage("Deploy Containers through Ansible") {
+                    steps {
+                        sh "ansible-playbook /etc/ansible/playbooks/app-deploy.yml -i /etc/ansible/hosts "
+                    }
+                }
             }
         }
         stage("Production branch") {
@@ -59,6 +69,11 @@ pipeline {
                 branch 'prod'
             }
             stages {
+                stage("Docker build prod mysql image") {
+                    steps {
+                        sh "docker build -t pavlidin/prod-mysql:8.0 --target mysql8 ."
+                    }
+                }
                 stage("Docker build prod jar image") {
                     steps {
                         sh "docker build -t pavlidin/java-app:prodbuild$BUILD_NUMBER --target openjdk11 ."
