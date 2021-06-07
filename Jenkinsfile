@@ -40,19 +40,19 @@ pipeline {
             stages {
                 stage("Docker build dev mysql image") {
                     steps {
-                        sh "docker build -t pavlidin/dev-java-mysql:8.0 --target mysql8 ."
+                        sh "docker build -t pavlidin/dev-mysql:8.0 --target mysql8 ."
                     }
                 }
                 stage("Docker build dev jar image") {
                     steps {
-                        sh "docker build -t pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk11 ."
+                        sh "docker build -t pavlidin/dev-java:$BUILD_NUMBER --target openjdk11 ."
                     }
                 }
                 stage("Docker push dev jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                sh "docker push pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER"
+                                sh "docker push pavlidin/prod-java:$BUILD_NUMBER"
                             }
                         }
                     }
@@ -66,19 +66,19 @@ pipeline {
             stages {
                 stage("Docker build prod mysql image") {
                     steps {
-                        sh "docker build -t pavlidin/prod-java-mysql:8.0 --target mysql8 ."
+                        sh "docker build -t pavlidin/prod-mysql:8.0 --target mysql8 ."
                     }
                 }
                 stage("Docker build prod jar image") {
                     steps {
-                        sh "docker build -t pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER --target openjdk11 ."
+                        sh "docker build -t pavlidin/prod-java:$BUILD_NUMBER --target openjdk11 ."
                     }
                 }
                 stage("Docker push prod jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                sh "docker push pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER"
+                                sh "docker push pavlidin/prod-java:$BUILD_NUMBER"
                             }
                         }
                     }
