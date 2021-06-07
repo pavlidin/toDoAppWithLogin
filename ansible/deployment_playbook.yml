@@ -1,15 +1,12 @@
 ---
-
 - name: Copy-files example
   hosts: java_app
   become: true
 
   vars:
-    user: "Project Future 6 Devops Team 3"
-  
+    user: 'Project Future 6 Devops Team 3'
 
   tasks:
-
     - name: Deploy app in dev
       ping:
       # when: ansible_nodename == "java-app-dev-\*"
@@ -18,10 +15,6 @@
       docker_container:
         name: mydata
         image: busybox
-        volumes:
-          - /data
-        when: ansible_nodename == "java-app-dev-VM-1"
-
 
     # - name: Deploy app in prod
     #   ping:
