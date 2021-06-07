@@ -28,7 +28,7 @@
 
     - name: Launch Java App container
       docker_container:
-        name: '{{ db_name }}'
+        name: '{{ java_app_name }}'
         image: 'pavlidin/java-app:prodbuild26'
         restart: true
         networks:
