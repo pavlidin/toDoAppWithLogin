@@ -79,7 +79,7 @@ pipeline {
         stage("Ansible test") {
             steps {
                 script {
-                    ansiblePlaybook credentialsId: ansible_credentials, inventory: 'hosts', playbook: 'my_playbook.yml'
+                    ansiblePlaybook credentialsId: ansible_credentials, inventory: 'ansible/hosts', playbook: 'ansible/deployment_playbook.yml'
                 }
             }
         }

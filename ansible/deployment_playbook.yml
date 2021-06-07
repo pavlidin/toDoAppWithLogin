@@ -1,0 +1,32 @@
+---
+
+- name: Copy-files example
+  hosts: java_app
+  become: true
+
+  vars:
+    user: "Project Future 6 Devops Team 3"
+  
+
+  tasks:
+
+    - name: Deploy app in dev
+      ping:
+      # when: ansible_nodename == "java-app-dev-\*"
+
+    - name: Start container, connect to network and link
+      docker_container:
+        name: mysql
+        image: mysql:8
+        networks:
+          - name: todoapp
+        exposed_ports:
+          - 3306
+        volumes_from:
+          - sqltodoapp
+        when: ansible_nodename == "java-app-dev-VM-1"
+
+
+    # - name: Deploy app in prod
+    #   ping:
+    #         when: ansible_nodename == "java-app-prod-\*"
