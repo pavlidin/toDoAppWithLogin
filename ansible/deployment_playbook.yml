@@ -11,7 +11,7 @@
   tasks:
     - name: Create a docker network
       docker_network:
-        name: { { docker_network } }
+        name: '{ { docker_network } }'
 
     - name: Launch MySQL container
       docker_container:
