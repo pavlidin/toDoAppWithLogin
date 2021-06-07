@@ -10,16 +10,16 @@
     db_name: mysql
 
   tasks:
-  - name: Launch database container
-    docker_container:
-      name: '{ { db_name } }'
-      image: mysql:8.0
-    volumes:
-      - '{{ docker_volume }}:/var/lib/mysql:rw'
-    restart: false
-    networks:
-      - name: '{ { docker_network } }'
-    alias:
-      - '{ { db_name } }'
-    env:
-      MYSQL_ROOT_PASSWORD: root
+    - name: Launch database container
+      docker_container:
+        name: '{ { db_name } }'
+        image: mysql:8.0
+      volumes:
+        - '{{ docker_volume }}:/var/lib/mysql:rw'
+      restart: false
+      networks:
+        - name: '{ { docker_network } }'
+      alias:
+        - '{ { db_name } }'
+      env:
+        MYSQL_ROOT_PASSWORD: root
