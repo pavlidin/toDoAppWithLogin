@@ -14,16 +14,12 @@
       ping:
       # when: ansible_nodename == "java-app-dev-\*"
 
-    - name: Start container, connect to network and link
+    - name: Create a data container
       docker_container:
-        name: mysql
-        image: mysql:8
-        networks:
-          - name: todoapp
-        exposed_ports:
-          - 3306
-        volumes_from:
-          - sqltodoapp
+        name: mydata
+        image: busybox
+        volumes:
+          - /data
         when: ansible_nodename == "java-app-dev-VM-1"
 
 
