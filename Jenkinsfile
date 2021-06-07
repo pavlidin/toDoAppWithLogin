@@ -54,7 +54,7 @@ pipeline {
                 }
                 stage("Deploy Containers through Ansible") {
                     steps {
-                        sh "ansible-playbook /etc/ansible/playbooks/app-deploy.yml -i /etc/ansible/hosts "
+                        sh "ansible-playbook /etc/ansible/playbooks/appdeploy.yml -i /etc/ansible/hosts "
                     }
                 }
             }
