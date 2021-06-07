@@ -2,12 +2,21 @@
   hosts: java_app
   become: true
   gather_facts: 'no'
+
   vars:
     docker_volume: db_data
     docker_network: ansible_net
-    db_name: db
+    db_name: mysql
+
   tasks:
-    - name: Launch database container
+    - name: Launch MySQL container
       docker_container:
         name: '{{ db_name }}'
-        image: 'mysql:5.7'
+        image: 'mysql:8'
+        volumes:
+          - '{{ docker_volume }}:/var/lib/mysql:rw'
+        restart: true
+        networks:
+          - name: '{{ docker_network }}'
+        env:
+          MYSQL_ROOT_PASSWORD: root
