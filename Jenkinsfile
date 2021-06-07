@@ -45,14 +45,14 @@ pipeline {
                 }
                 stage("Docker build dev jar image") {
                     steps {
-                        sh "docker build -t pavlidin/dev-java:$BUILD_NUMBER --target openjdk11 ."
+                        sh "docker build -t pavlidin/java-app:devbuild$BUILD_NUMBER --target openjdk11 ."
                     }
                 }
                 stage("Docker push dev jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                sh "docker push pavlidin/prod-java:$BUILD_NUMBER"
+                                sh "docker push pavlidin/java-app:devbuild$BUILD_NUMBER"
                             }
                         }
                     }
@@ -71,14 +71,14 @@ pipeline {
                 }
                 stage("Docker build prod jar image") {
                     steps {
-                        sh "docker build -t pavlidin/prod-java:$BUILD_NUMBER --target openjdk11 ."
+                        sh "docker build -t pavlidin/java-app:prodbuild$BUILD_NUMBER --target openjdk11 ."
                     }
                 }
                 stage("Docker push prod jar image") {
                     steps {
                         script {
                             docker.withRegistry('',docker_credentials) {
-                                sh "docker push pavlidin/prod-java:$BUILD_NUMBER"
+                                sh "docker push pavlidin/java-app:prodbuild$BUILD_NUMBER"
                             }
                         }
                     }
