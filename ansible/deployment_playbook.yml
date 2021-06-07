@@ -19,3 +19,5 @@
     # - name: Deploy app in prod
     #   ping:
     #         when: ansible_nodename == "java-app-prod-\*"
+
+    #test
