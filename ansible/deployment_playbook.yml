@@ -7,6 +7,7 @@
     docker_volume: mysql_data
     docker_network: mysql_net
     db_name: mysql
+    java_app_name: java_app
 
   tasks:
     - name: Create a docker network
@@ -24,3 +25,13 @@
           - name: '{{ docker_network }}'
         env:
           MYSQL_ROOT_PASSWORD: root
+
+    - name: Launch Java App container
+      docker_container:
+        name: '{{ db_name }}'
+        image: 'pavlidin/java-app:prodbuild26'
+        restart: true
+        networks:
+          - name: '{{ docker_network }}'
+        ports:
+          - '80:8080'
