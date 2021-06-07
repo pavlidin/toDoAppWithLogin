@@ -4,7 +4,7 @@
   gather_facts: 'no'
 
   vars:
-    build_number: '{{ build_nr }}'
+    build_number: "{{ lookup('env', 'build_nr') }}"
     docker_volume: mysql_data
     docker_network: mysql_java_net
     db_name: mysql
