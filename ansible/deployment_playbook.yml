@@ -20,6 +20,6 @@
       networks:
         - name: { { docker_network } }
       alias:
-        - '{ { db_name } }''
+        - '{ { db_name } }'
       env:
         MYSQL_ROOT_PASSWORD: root
