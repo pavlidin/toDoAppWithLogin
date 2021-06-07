@@ -76,10 +76,10 @@ pipeline {
         //         }
         //     }
         // }
-        stage("Ansible test") {
+        stage("Deploy app & MySQL in dev using ansible") {
             steps {
                 script {
-                    ansiblePlaybook credentialsId: ansible_credentials, inventory: 'ansible/hosts', playbook: 'ansible/deployment_playbook.yml'
+                    ansiblePlaybook credentialsId: ansible_credentials, inventory: 'ansible/hosts', playbook: 'ansible/dev_deployment_playbook.yml', extraVars: "build=$BUILD"
                 }
             }
         }

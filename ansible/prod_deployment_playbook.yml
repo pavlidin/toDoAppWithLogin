@@ -1,13 +1,13 @@
 - name: Pull MySQL image
-  hosts: java_app
+  hosts: java_app_prod
   become: true
   gather_facts: 'no'
 
   vars:
     docker_volume: mysql_data
-    docker_network: mysql_net
+    docker_network: mysql_java_net
     db_name: mysql
-    java_app_name: java_app
+    java_app_name: java_app_prod
 
   tasks:
     - name: Create a docker network
@@ -26,7 +26,7 @@
         env:
           MYSQL_ROOT_PASSWORD: root
 
-    - name: Launch Java App container
+    - name: Launch prod Java App container
       docker_container:
         name: '{{ java_app_name }}'
         image: 'pavlidin/java-app:prodbuild26'
