@@ -8,17 +8,17 @@ pipeline {
         maven "maven-3.6.1"
     }
     stages {
-        stage("Clean old mvn output.") {
+        stage("mvn clean") {
             steps {
                 sh "mvn clean"
             }
         }
-        stage("Compile") {
+        stage("mvn clean compile") {
             steps {
                 sh "mvn clean compile"
             }
         }
-        stage("Testing") {
+        stage("mvn test") {
             steps {
                 sh "mvn test"
             }
@@ -28,7 +28,7 @@ pipeline {
                 }
             }
         }
-        stage("Package") {
+        stage("mvn package") {
             steps {
                 sh "mvn package"
             }
@@ -45,7 +45,7 @@ pipeline {
                 }
                 stage("Docker build dev jar image") {
                     steps {
-                        sh "docker build -t pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk8 ."
+                        sh "docker build -t pavlidin/todoappwithlogin:devbuild-$BUILD_NUMBER --target openjdk11 ."
                     }
                 }
                 stage("Docker push dev jar image") {
@@ -71,7 +71,7 @@ pipeline {
                 }
                 stage("Docker build prod jar image") {
                     steps {
-                        sh "docker build -t pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER --target openjdk8 ."
+                        sh "docker build -t pavlidin/todoappwithlogin:prodbuild-$BUILD_NUMBER --target openjdk11 ."
                     }
                 }
                 stage("Docker push prod jar image") {
