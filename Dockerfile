@@ -14,6 +14,7 @@ ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher", "--my_sql.host
 
 FROM mysql:8.0 as mysql8
 EXPOSE 3306
-VOLUME var/lib/mysql
+#VOLUME var/lib/mysql
+ENV MYSQL_USER root
 ENV MYSQL_ROOT_PASSWORD root
 
