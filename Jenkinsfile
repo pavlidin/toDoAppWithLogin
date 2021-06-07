@@ -78,7 +78,9 @@ pipeline {
         }
         stage("Ansible test") {
             steps {
-                ansiblePlaybook(credentialsId: ansible_creds, inventory: 'hosts', playbook: 'my_playbook.yml')
+                scritp {
+                    ansiblePlaybook credentialsId: ansible_credentials, inventory: 'hosts', playbook: 'my_playbook.yml'
+                }
             }
         }
     }
