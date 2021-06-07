@@ -4,20 +4,21 @@
   become: true
 
   vars:
-    user: 'Project Future 6 Devops Team 3'
+  docker_volume: mysql_data
+  docker_network: mysql_net
+  db_name: mysql
 
   tasks:
-    - name: Deploy app in dev
-      ping:
-      # when: ansible_nodename == "java-app-dev-\*"
-
-    - name: Create a data container
-      docker_container:
-        name: mydata
-        image: busybox
-
-    # - name: Deploy app in prod
-    #   ping:
-    #         when: ansible_nodename == "java-app-prod-\*"
-
-    #test123
+    - name: 'Launch database container'
+  docker_container:
+    name: '{{ db_name }}'
+    image: mysql:8.0
+  volumes:
+    - '{{ docker_volume }}:/var/lib/mysql:rw'
+  restart: false
+  networks:
+    - name: '{{ docker_network }}'
+  alias:
+    - '{{ db_name }}'
+  env:
+    MYSQL_ROOT_PASSWORD: root
