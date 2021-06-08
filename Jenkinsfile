@@ -3,6 +3,7 @@ pipeline {
     environment {
         docker_credentials = 'docker_creds'
         docker_image = ''
+        ansible_credentials = 'ansible_creds'
     }
     tools {
         maven "maven-3.6.1"
@@ -46,15 +47,18 @@ pipeline {
                 stage("Docker push dev jar image") {
                     steps {
                         script {
-                            docker.withRegistry('',docker_credentials) {
+                            docker.withRegistry('', docker_credentials) {
                                 sh "docker push pavlidin/java-app:devbuild$BUILD_NUMBER"
                             }
                         }
                     }
                 }
-                stage("Deploy Containers through Ansible") {
+                stage("Deploy app & MySQL in dev using ansible") {
                     steps {
-                        sh "ansible-playbook /etc/ansible/playbooks/appdeploy.yml -i /etc/ansible/hosts "
+                        script {
+                            ansiblePlaybook credentialsId: ansible_credentials, inventory: 'ansible/hosts',
+                                playbook: 'ansible/deployment_playbook.yml', extraVars: [build_nr: "$BUILD_NUMBER", branch: "$BRANCH_NAME"]
+                        }
                     }
                 }
             }
@@ -72,9 +76,17 @@ pipeline {
                 stage("Docker push prod jar image") {
                     steps {
                         script {
-                            docker.withRegistry('',docker_credentials) {
+                            docker.withRegistry('', docker_credentials) {
                                 sh "docker push pavlidin/java-app:prodbuild$BUILD_NUMBER"
                             }
+                        }
+                    }
+                }
+                stage("Deploy app & MySQL in prod using ansible") {
+                    steps {
+                        script {
+                            ansiblePlaybook credentialsId: ansible_credentials, inventory: 'ansible/hosts',
+                                playbook: 'ansible/deployment_playbook.yml', extraVars: [build_nr: "$BUILD_NUMBER", branch: "$BRANCH_NAME"]
                         }
                     }
                 }

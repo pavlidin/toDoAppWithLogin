@@ -1,0 +1,53 @@
+- name: Deploy Java App & MySQL
+  hosts: java_app_{{ branch_name }}
+  become: true
+  gather_facts: 'no'
+
+  vars:
+    branch_name: '{{ branch }}'
+    build_number: '{{ build_nr }}'
+    docker_volume: mysql_data
+    docker_network: mysql_java_net
+    db_name: mysql
+    java_app_container_name: java_app_{{ branch_name }}
+
+  tasks:
+    - name: Create a docker network
+      docker_network:
+        name: '{{ docker_network }}'
+
+    - name: Launch MySQL container
+      docker_container:
+        name: '{{ db_name }}'
+        image: 'mysql:8'
+        state: started
+        detach: true
+        volumes:
+          - '{{ docker_volume }}:/var/lib/mysql:rw'
+        restart: false
+        networks:
+          - name: '{{ docker_network }}'
+        env:
+          MYSQL_ROOT_PASSWORD: root
+
+    - name: Remove old {{ branch_name }} Java App container
+      docker_container:
+        name: '{{ java_app_container_name }}'
+        state: absent
+        force_kill: true
+
+    - name: Launch new {{ branch_name }} Java App container
+      docker_container:
+        name: '{{ java_app_container_name }}'
+        image: 'pavlidin/java-app:{{ branch_name }}build{{ build_number }}'
+        state: started
+        detach: true
+        networks:
+          - name: '{{ docker_network }}'
+        ports:
+          - '80:8080'
+
+    - name: Cleanup {{ branch_name }} unused/dangling images and stopped containers
+      shell: |
+        docker image prune -a -f
+        docker container prune -f
