@@ -81,15 +81,15 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                        mail to:  "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
-                            subject: "Ready to deploy application: ${currentBuild.fullDisplayName}",
-                            body: "The application is ready to be deployed. Please confirm ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}"
-                        }
-                    }
                 }
                 stage("Deploy app & MySQL in prod using ansible") {
+                    pre {
+                        always {
+                            mail to:  "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+                            subject: "Ready to deploy application: ${currentBuild.fullDisplayName}",
+                            body: "The application is ready to be deployed. Please confirm.\n More info at: ${env.BUILD_URL}"
+                        }
+                    }
                     input{
                         message "Do you want to proceed to production deployment?"
                     }
