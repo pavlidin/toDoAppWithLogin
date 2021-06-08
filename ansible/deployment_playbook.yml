@@ -51,4 +51,3 @@
       docker_image:
         name: pavlidin/java-app
         state: absent
-        force_kill: true
