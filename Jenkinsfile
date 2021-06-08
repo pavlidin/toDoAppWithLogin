@@ -4,7 +4,6 @@ pipeline {
         docker_credentials = 'docker_creds'
         docker_image = ''
         ansible_credentials = 'ansible_creds'
-        if (${env.BRANCH_NAME})
     }
     tools {
         maven "maven-3.6.1"
