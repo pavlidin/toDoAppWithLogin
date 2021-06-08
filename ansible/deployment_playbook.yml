@@ -32,7 +32,8 @@
       docker_container:
         name: '{{ java_app_name }}'
         image: 'pavlidin/java-app:{{ branch_name }}build{{ build_number }}'
-        restart: true
+        state: reloaded
+        restart_policy: always
         networks:
           - name: '{{ docker_network }}'
         ports:
