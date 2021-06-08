@@ -47,7 +47,7 @@
         ports:
           - '80:8080'
 
-    - name: Remove old {{ branch_name }} Java App images
-      docker_image:
-        name: pavlidin/java-app
-        state: absent
+    - name: Cleanup {{ branch_name }} unused/dangling images and stopped containers
+      shell: |
+        docker image prune -a
+        docker container prune
