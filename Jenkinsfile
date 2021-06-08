@@ -82,7 +82,7 @@ pipeline {
                         }
                     }
                     post {
-                        always {
+                        success {
                             mail to:  "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
                             subject: "Ready to deploy application: ${currentBuild.fullDisplayName}",
                             body: "The application is ready to be deployed. Please confirm.\n More info at: ${env.BUILD_URL}"
