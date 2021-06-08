@@ -35,7 +35,7 @@
         state: started
         ignore_image: false
         detach: true
-        restart_policy: always
+        restart: true
         force_kill: true
 
         networks:
