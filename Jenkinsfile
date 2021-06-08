@@ -92,6 +92,11 @@ pipeline {
                 }
             }
         }
+        stage("Cleanup docker images older than 24h") {
+            steps {
+                sh "docker image prune -a -f --filter "until=24h""
+            }
+        }
     }
     // post {
     //     success {
