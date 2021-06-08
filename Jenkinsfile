@@ -77,7 +77,7 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry('', docker_credentials) {
-                                sh "docker push pavlidin/java-app:prodbuild$BUILD_NUMBER"
+                                sh "docker push pavlidin/java-app:prodbuild$BUILD_NUMBER && docker push pavlidin/java-app:latest"
                             }
                         }
                     }
