@@ -36,13 +36,6 @@
         state: absent
         force_kill: true
 
-    - name: Remove old {{ branch_name }} Java App images
-      docker_image:
-        name: pavlidin/java-app
-        state: absent
-        force_kill: true
-      loop: '{{ docker_images.stdout_lines}}'
-
     - name: Launch new {{ branch_name }} Java App container
       docker_container:
         name: '{{ java_app_container_name }}'
@@ -53,3 +46,9 @@
           - name: '{{ docker_network }}'
         ports:
           - '80:8080'
+
+    - name: Remove old {{ branch_name }} Java App images
+      docker_image:
+        name: pavlidin/java-app
+        state: absent
+        force_kill: true
