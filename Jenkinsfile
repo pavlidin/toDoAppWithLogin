@@ -70,7 +70,7 @@ pipeline {
             stages {
                 stage("Docker build prod jar image") {
                     steps {
-                        sh "docker build -t pavlidin/java-app:prodbuild$BUILD_NUMBER --target openjdk11 ."
+                        sh "docker build -t pavlidin/java-app:prodbuild$BUILD_NUMBER -t pavlidin/java-app:latest --target openjdk11 ."
                     }
                 }
                 stage("Docker push prod jar image") {
