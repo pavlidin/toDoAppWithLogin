@@ -83,6 +83,9 @@ pipeline {
                     }
                 }
                 stage("Deploy app & MySQL in prod using ansible") {
+                    emailext body: "The application is ready to be deployed. Please confirm ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                    recipientProviders: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+                    subject: "Ready to deploy application: ${env.JOB_NAME}"
                     input{
                         message "Do you want to proceed to production deployment?"
                     }
