@@ -92,9 +92,9 @@ pipeline {
                 }
             }
         }
-        stage("Cleanup docker images older than 24h") {
+        stage("Cleanup docker images older than 1 week") {
             steps {
-                sh "docker image prune -a -f --filter "until=24h""
+                sh "docker image prune -a -f --filter 'until=168h'"
             }
         }
     }
