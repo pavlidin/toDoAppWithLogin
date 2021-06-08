@@ -49,5 +49,5 @@
 
     - name: Cleanup {{ branch_name }} unused/dangling images and stopped containers
       shell: |
-        docker image prune -a -y
-        docker container prune -y
+        docker image prune -a -f
+        docker container prune -f
