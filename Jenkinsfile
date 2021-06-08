@@ -83,6 +83,9 @@ pipeline {
                     }
                 }
                 stage("Deploy app & MySQL in prod using ansible") {
+                    input{
+                        message "Do you want to proceed to production deployment?"
+                    }
                     steps {
                         script {
                             ansiblePlaybook credentialsId: ansible_credentials, inventory: 'ansible/hosts',
@@ -90,6 +93,7 @@ pipeline {
                         }
                     }
                 }
+
             }
         }
         stage("Cleanup docker images older than 1 week") {
