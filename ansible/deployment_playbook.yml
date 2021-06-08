@@ -20,6 +20,8 @@
       docker_container:
         name: '{{ db_name }}'
         image: 'mysql:8'
+        state: started
+        detach: true
         volumes:
           - '{{ docker_volume }}:/var/lib/mysql:rw'
         restart: false
@@ -28,16 +30,18 @@
         env:
           MYSQL_ROOT_PASSWORD: root
 
-    - name: Launch {{ branch_name }} Java App container
+    - name: Remove old {{ branch_name }} Java App container
+      docker_container:
+        name: '{{ java_app_name }}'
+        state: absent
+        force_kill: true
+
+    - name: Launch new {{ branch_name }} Java App container
       docker_container:
         name: '{{ java_app_name }}'
         image: 'pavlidin/java-app:{{ branch_name }}build{{ build_number }}'
         state: started
-        ignore_image: false
         detach: true
-        restart: true
-        force_kill: true
-
         networks:
           - name: '{{ docker_network }}'
         ports:
