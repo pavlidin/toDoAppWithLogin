@@ -22,7 +22,6 @@
         image: 'mysql:8'
         state: started
         detach: true
-        restart_policy: on-failure
         volumes:
           - '{{ docker_volume }}:/var/lib/mysql:rw'
         restart: false
@@ -43,7 +42,6 @@
         image: 'pavlidin/java-app:{{ branch_name }}build{{ build_number }}'
         state: started
         detach: true
-        restart_policy: 'alwyays'
         networks:
           - name: '{{ docker_network }}'
         ports:
