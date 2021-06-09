@@ -86,18 +86,18 @@ pipeline {
                             }
                         }
                     }
-                    // post {
-                    //     always {
-                    //         mail to:  "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
-                    //         subject: "Ready to deploy application: ${currentBuild.fullDisplayName}",
-                    //         body: "The application is ready to be deployed. Please confirm.\n More info at: ${env.BUILD_URL}"
-                    //     }
-                    // }
+                    post {
+                        always {
+                            mail to:  "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+                            subject: "Ready to deploy application: ${currentBuild.fullDisplayName}",
+                            body: "The application is ready to be deployed. Please confirm.\n More info at: ${env.BUILD_URL}"
+                        }
+                    }
                 }
                 stage("Deploy app & MySQL in prod using ansible") {
-                    // input{
-                    //     message "Do you want to proceed to production deployment?"
-                    // }
+                    input{
+                        message "Do you want to proceed to production deployment?"
+                    }
                     steps {
                         script {
                             ansiblePlaybook credentialsId: ansible_credentials, inventory: 'ansible/hosts',
@@ -113,16 +113,16 @@ pipeline {
             }
         }
     }
-    // post {
-    //     success {
-    //         mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
-    //             subject: "SUCCESSFUL BUILD: $BUILD_TAG",
-    //             body: "Link to JOB $BUILD_URL"
-    //     }
-    //     failure {
-    //         mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
-    //             subject: "FAILURE BUILD: $BUILD_TAG",
-    //             body: "Link to JOB $BUILD_URL"
-    //     }
-    // }
+    post {
+        success {
+            mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+                subject: "SUCCESSFUL BUILD: $BUILD_TAG",
+                body: "Link to JOB $BUILD_URL"
+        }
+        failure {
+            mail to: "fanouria.ath@gmail.com, nikospavlidismail@gmail.com",
+                subject: "FAILURE BUILD: $BUILD_TAG",
+                body: "Link to JOB $BUILD_URL"
+        }
+    }
 }
