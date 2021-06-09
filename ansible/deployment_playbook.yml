@@ -17,6 +17,7 @@
         name: '{{ docker_network }}'
 
     - name: Launch MySQL container
+      when: inventory_hostname in groups['java_app_dev']
       docker_container:
         name: '{{ db_name }}'
         image: 'mysql:8'

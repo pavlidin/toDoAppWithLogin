@@ -41,7 +41,7 @@ pipeline {
             stages {
                 stage("Docker build dev jar image") {
                     steps {
-                        sh "docker build -t pavlidin/java-app:devbuild$BUILD_NUMBER --target openjdk11 ."
+                        sh "docker build -t --build-arg SQL_HOST=mysql pavlidin/java-app:devbuild$BUILD_NUMBER --target openjdk11 ."
                     }
                 }
                 stage("Docker push dev jar image") {
@@ -61,6 +61,11 @@ pipeline {
                         }
                     }
                 }
+                stage("Cleanup dev docker images older than 1 week") {
+                    steps {
+                        sh "docker image prune -a -f --filter 'until=168h'"
+                    }
+                }
             }
         }
         stage("Production branch") {
@@ -70,7 +75,7 @@ pipeline {
             stages {
                 stage("Docker build prod jar image") {
                     steps {
-                        sh "docker build -t pavlidin/java-app:prodbuild$BUILD_NUMBER -t pavlidin/java-app:latest --target openjdk11 ."
+                        sh "docker build -t --build-arg SQL_HOST=mysqlprod-pf6.westeurope.cloudapp.azure.com pavlidin/java-app:prodbuild$BUILD_NUMBER -t pavlidin/java-app:latest --target openjdk11 ."
                     }
                 }
                 stage("Docker push prod jar image") {
@@ -100,12 +105,11 @@ pipeline {
                         }
                     }
                 }
-
-            }
-        }
-        stage("Cleanup docker images older than 1 week") {
-            steps {
-                sh "docker image prune -a -f --filter 'until=168h'"
+                stage("Cleanup prod docker images older than 1 week") {
+                    steps {
+                        sh "docker image prune -a -f --filter 'until=168h'"
+                    }
+                }
             }
         }
     }
