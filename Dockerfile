@@ -8,7 +8,8 @@ FROM openjdk:11-jre-slim as openjdk11
 EXPOSE 8080
 WORKDIR /application
 ARG SQL_HOST
+ENV my_SQL_HOST=$SQL_HOST
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/application/ ./
-ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher", "--my_sql.host=$SQL_HOST", "--my_sql.port=3306"]
+ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher", "--my_sql.host=$my_SQL_HOST", "--my_sql.port=3306"]
