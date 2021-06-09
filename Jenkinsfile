@@ -41,7 +41,7 @@ pipeline {
             stages {
                 stage("Docker build dev jar image") {
                     steps {
-                        sh "docker build -t --build-arg SQL_HOST=mysql pavlidin/java-app:devbuild$BUILD_NUMBER --target openjdk11 ."
+                        sh "docker build -t pavlidin/java-app:devbuild$BUILD_NUMBER --target openjdk11 . --build-arg SQL_HOST=mysql"
                     }
                 }
                 stage("Docker push dev jar image") {
@@ -75,7 +75,7 @@ pipeline {
             stages {
                 stage("Docker build prod jar image") {
                     steps {
-                        sh "docker build -t --build-arg SQL_HOST=mysqlprod-pf6.westeurope.cloudapp.azure.com pavlidin/java-app:prodbuild$BUILD_NUMBER -t pavlidin/java-app:latest --target openjdk11 ."
+                        sh "docker build -t pavlidin/java-app:prodbuild$BUILD_NUMBER -t pavlidin/java-app:latest --target openjdk11 . --build-arg SQL_HOST=mysqlprod-pf6.westeurope.cloudapp.azure.com"
                     }
                 }
                 stage("Docker push prod jar image") {
