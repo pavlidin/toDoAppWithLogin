@@ -43,7 +43,7 @@
         image: 'pavlidin/java-app:{{ branch_name }}build{{ build_number }}'
         state: started
         detach: true
-        restart_policy: on-failure
+        restart_policy: 'alwyays'
         networks:
           - name: '{{ docker_network }}'
         ports:
