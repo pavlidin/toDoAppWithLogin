@@ -36,7 +36,7 @@
                     th:if="items != null">
                     <input hidden name="id" th:value="${item.getId()}">
                     <input disabled name="description"
-                        style="border-width:0px;border:none;width:300px;background-color:red;"
+                        style="border-width:0px;border:none;width:300px;background-color:blue;"
                         th:value="${item.getDescription()}">
                     <input disabled name="date_created" style="border-width:0px;border:none;"
                         th:value="${#dates.format(item.getDate_created(), 'dd-MMM-yyyy')}">
