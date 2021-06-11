@@ -1,4 +1,4 @@
-This is a to do list application with login capability. It also exposes various metrics and can produce http errors on demand.
+This is a to do list application with login capability. It also exposes various metrics and can produce http errors on demand. (Java App source code is owned by Code.Hub)
 
 Extras
 
